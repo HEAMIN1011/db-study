@@ -157,10 +157,108 @@ select
 from dual;
 
 
+select
+    to_char(1234,'999999'),
+    to_char(1234,'099999'),
+    to_char(1234,'$99999'),
+    '$' || 1234,
+    to_char(1234,'$9999.99'),
+    to_char(1234,'$99,999')
+from dual;
 
 
 
+ -- 문자 -> 날짜  TO_DATE
+ select
+    to_date('2024-06-02') + 3,
+    to_date('2024/06/02') + 3,
+    to_date('24/06/02') + 3,
+    to_date('20240602') + 3,
+     last_day('2024-08-05'),
+     to_date('24:06:02') +3,
+     to_char(sysdate, 'YYYY/MM/DD'),
+     to_date('2024-01-05', 'YYYY-MM-DD'),
+     to_date('2024,01,05', 'YYYY,MM,DD'),
+     to_date('12/21/20', 'MM/DD/YY')
+from dual;
 
+
+
+--NVL
+
+select
+    sal,
+    comm,
+    sal*12 + comm,  --null이 포함돼있으면 제대로 계산ㄴㄴ
+    sal*12 + NVL(comm,0) --comm이 null이면 0으로 계산ㄱ
+from emp;
+
+
+select
+    NVL(null, 10),
+    NVL2(123, '있다', '없다'),
+    NVL2(null, '있다', '널이다')
+from dual;
+
+--sal*12 + comm = 총연봉 NVL NVL2
+
+select empno, ename, comm, 
+        sal*12+comm TOTAL,
+        sal*12 + NVL(comm,0) TOTAL2,
+        sal*12 + NVL2(comm, comm, 0) TOTAL3,
+        NVL2(comm, sal*12+comm, sal*12) TOTAL4
+from emp
+where deptno = 30;
+
+
+
+--DECODE
+
+select
+    decode(10,10, '같다', '다르다'),
+    decode(10,20, '같다', '다르다'),
+    decode(10,20, '같다'), --null으로 나옴 , null은 생략가능
+    decode(10,20, '같다', null),
+    decode(10,30,'30이다', 40, '40이다', 50, '50이다','아니다'),
+    decode(10,30,'30이다', 40, '40이다', 50, '50이다', 60, '60이다', '아니다'),
+    decode(10,30,'30이다', 40, '40이다', 50, '50이다', 60, '60이다', null),
+    decode(10,30,'30이다', 40, '40이다', 50, '50이다', 60, '60이다')
+from dual;
+
+
+select deptno, name,
+    decode(deptno, 101, '컴퓨터공학', '다른학과'),
+    decode(deptno, 101, '컴퓨터공학', 'ETC'),
+    decode(deptno, 101, '컴퓨터공학'),
+    decode(deptno, 101, '컴퓨터공학', null)
+from professor;
+
+
+
+-- 조건? 참:거짓         조건? 참:거짓            조건? 참:거짓(조건? 참:거짓)
+
+--case
+
+--grade학년
+--1 1학년 2 2학년 3 3학년 4 4학년
+
+select grade || '학년'
+from student;
+
+--1 저학년 2 저학년 3고학년 4고학년
+select grade,
+        decode(grade, 1, '저학년', 2, '저학년', 3, '고학년', 4, '고학년') 구분,
+    case grade
+        when 1 then '저학년'
+        when 1 then '저학년'
+        when 1 then '고학년'
+        when 1 then '고학년'
+    end as "학년구분",
+    case
+        when grade in (1,2) then '저학년'
+        when grade between 3 and 4 then '고학년'
+    end 학년구분
+from student;
 
 
 

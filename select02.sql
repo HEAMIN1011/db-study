@@ -227,13 +227,17 @@ from dual;
 
 
 select deptno, name,
-    decode(deptno, 101, '컴퓨터공학', '다른학과'),
-    decode(deptno, 101, '컴퓨터공학', 'ETC'),
-    decode(deptno, 101, '컴퓨터공학'),
-    decode(deptno, 101, '컴퓨터공학', null)
+    DECODE(deptno, 101, '컴퓨터공학', '다른학과'),
+    DECODE(deptno, 101, '컴퓨터공학', 'ETC'),
+    DECODE(deptno, 101, '컴퓨터공학'),
+    DECODE(deptno, 101, '컴퓨터공학', null)
 from professor;
 
-
+select 
+    deptno, name,
+    DECODE(deptno, 101, '컴퓨터공학', 102, '멀티미디어', 103, '소프트웨어', 'ETC') DNAME,
+    deptno
+from professor;
 
 -- 조건? 참:거짓         조건? 참:거짓            조건? 참:거짓(조건? 참:거짓)
 
@@ -246,19 +250,19 @@ select grade || '학년'
 from student;
 
 --1 저학년 2 저학년 3고학년 4고학년
-select grade,
-        decode(grade, 1, '저학년', 2, '저학년', 3, '고학년', 4, '고학년') 구분,
-    case grade
-        when 1 then '저학년'
-        when 1 then '저학년'
-        when 1 then '고학년'
-        when 1 then '고학년'
-    end as "학년구분",
-    case
-        when grade in (1,2) then '저학년'
-        when grade between 3 and 4 then '고학년'
-    end 학년구분
-from student;
-
+SELECT
+    grade,
+    DECODE(grade, 1, '저학년', 2, '저학년', 3, '고학년', 4, '고학년') 구분,
+    CASE grade
+        WHEN 1 THEN '저학년'
+        WHEN 2 THEN '저학년'
+        WHEN 3 THEN '고학년'
+        WHEN 4 THEN '고학년'
+    END AS "학년구분",
+    CASE
+        WHEN grade IN (1,2) THEN '저학년'
+        WHEN grade BETWEEN 3 AND 4 THEN '고학년'
+    END 학년구분
+FROM student;
 
 

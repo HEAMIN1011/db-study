@@ -43,6 +43,11 @@ from student;
 Student 테이블에서 아래와 같이 deptno1 이
 101 번인 학과 학생들의 이름과 전화번호와 전화번호에서
 지역번호와 국번을 제외한 나머지 번호(끝 4자리 번호)를 * 로 표시해서 출력하세요.
-select name, tel, replace(tel,12,substr(tel, -4), '****') REPLACE
+select
+    name,
+    tel,
+    REPLACE( tel, SUBSTR(tel, 9, 4), '****') 숨김1,
+    REPLACE( tel, SUBSTR(tel, -4, 4), '****') 숨김2,
+    SUBSTR(tel, 1, 8) || '****' 숨김3
 from student
-where deptno1=101;
+where deptno1 = 101;

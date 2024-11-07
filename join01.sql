@@ -144,3 +144,12 @@ select *
 from student s, professor p
 where p.profno = s.profno(+);
 --where s.profno(+) = p.profno;
+
+내 사번, 내 이름, 내 상사 사번 ,상사 이름
+select e1.empno, e1.ename, e1.mgr, e2.empno, e2.ename
+from emp e1, emp e2
+where e1.mgr = e2.empno;
+
+
+
+
